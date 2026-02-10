@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "title": "ترحيب بالمستخدم (Input/Output)",
+    "difficulty": "Easy",
+    "description": "اكتب برنامجاً يطلب من المستخدم إدخال اسمه، ثم يطبع رسالة ترحيب مثل: 'Hello, [Name]!'. تعلم كيفية استخدام Console.ReadLine و Console.WriteLine.",
+    "codeSnippet": "Console.Write(\"Enter your name: \");\nstring name = Console.ReadLine();\nConsole.WriteLine($\"Hello, {name}!\");"
+  },
+  {
+    "id": 2,
+    "title": "حساب مساحة الدائرة (Variables & Math)",
+    "difficulty": "Easy",
+    "description": "اكتب برنامجاً يطلب نصف القطر (radius) من المستخدم ويحسب مساحة الدائرة. استخدم الثابت Math.PI.",
+    "codeSnippet": "double radius = double.Parse(Console.ReadLine());\ndouble area = Math.PI * radius * radius;\nConsole.WriteLine($\"Area: {area}\");"
+  },
+  {
+    "id": 3,
+    "title": "فحص الرقم الزوجي (Conditionals)",
+    "difficulty": "Easy",
+    "description": "اكتب برنامجاً يتحقق مما إذا كان الرقم المدخل زوجياً أم فردياً باستخدام جملة الشرط if-else وباقي القسمة (%).",
+    "codeSnippet": "if (num % 2 == 0) \n    Console.WriteLine(\"Even\");\nelse \n    Console.WriteLine(\"Odd\");"
+  },
+  {
+    "id": 4,
+    "title": "عكس النص (Loops & Strings)",
+    "difficulty": "Medium",
+    "description": "اكتب دالة (Method) تستقبل نصاً وتطبعه معكوساً بدون استخدام دوال جاهزة مثل Reverse، استخدم Loop.",
+    "codeSnippet": "string input = \"Hello\";\nstring reversed = \"\";\nfor(int i = input.Length - 1; i >= 0; i--)\n    reversed += input[i];"
+  },
+  {
+    "id": 5,
+    "title": "أكبر رقم في المصفوفة (Arrays)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يجد أكبر رقم (Maximum) في مصفوفة من الأعداد الصحيحة دون استخدام LINQ.",
+    "codeSnippet": "int[] numbers = { 10, 5, 20, 8 };\nint max = numbers[0];\nforeach(int n in numbers)\n    if(n > max) max = n;"
+  },
+  {
+    "id": 6,
+    "title": "التحقق من Palindrome (Logic)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يتحقق مما إذا كانت الكلمة تقرأ من الأمام مثل الخلف (مثل 'level' أو 'noon').",
+    "codeSnippet": "bool IsPalindrome(string s) {\n    int min = 0, max = s.Length - 1;\n    while (min < max) {\n        if (s[min] != s[max]) return false;\n        min++; max--;\n    }\n    return true;\n}"
+  },
+  {
+    "id": 7,
+    "title": "نظام إدارة الطلاب (OOP Classes)",
+    "difficulty": "Hard",
+    "description": "أنشئ كلاس Student يحتوي على (ID, Name, GPA). أضف دالة لطباعة بيانات الطالب، ودالة أخرى للتحقق مما إذا كان ناجحاً (GPA >= 2.0).",
+    "codeSnippet": "class Student {\n    public string Name { get; set; }\n    public double GPA { get; set; }\n    public bool IsPassing() => GPA >= 2.0;\n}"
+  },
+  {
+    "id": 8,
+    "title": "الأشكال الهندسية (Inheritance & Polymorphism)",
+    "difficulty": "Hard",
+    "description": "صمم نظاماً يرث فيه كلاس Square و Circle من الكلاس Shape. يجب أن يحتوي Shape على دالة افتراضية CalculateArea وتنفذها الكلاسات الوارثة.",
+    "codeSnippet": "abstract class Shape { public abstract double Area(); }\nclass Square : Shape {\n    public double Side { get; set; }\n    public override double Area() => Side * Side;\n}"
+  },
+  {
+    "id": 9,
+    "title": "فلترة الأرقام (LINQ Basics)",
+    "difficulty": "Hard",
+    "description": "استخدم LINQ لاستخراج الأرقام الزوجية التي تكون أكبر من 10 من قائمة أرقام، ورتبها تنازلياً.",
+    "codeSnippet": "var result = numbers.Where(n => n > 10 && n % 2 == 0)\n                    .OrderByDescending(n => n);\nforeach(var n in result) Console.WriteLine(n);"
+  }
+]
