@@ -13,7 +13,6 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-8 font-medium text-gray-600">
           <a href="#" className="hover:text-indigo-600 transition-colors">الرئيسية</a>
           <a href="#tasks" className="hover:text-indigo-600 transition-colors">التاسكات</a>
-          <a href="#" className="hover:text-indigo-600 transition-colors">عن المنصة</a>
         </nav>
 
       </div>

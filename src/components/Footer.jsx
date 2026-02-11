@@ -15,10 +15,8 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-gray-200 mt-8 pt-8 text-center text-gray-400 text-sm flex items-center justify-center gap-1">
-          <span>صنع بـ</span>
-          <Heart size={16} className="text-red-500 fill-red-500" />
-          <span>في مصر</span>
+        <div className="border-t border-gray-200 mt-8 pt-8 text-center text-gray-400 text-sm" dir="ltr">
+          <span>Made by Hassan</span>
         </div>
       </div>
     </footer>

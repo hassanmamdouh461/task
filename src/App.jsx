@@ -25,7 +25,7 @@ function App() {
           <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
             <div>
               <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-                أحدث التحديات
+                التاسكات
               </h2>
               <p className="text-gray-500 mt-2">اختر التحدي المناسب لمستواك وابدأ البرمجة.</p>
             </div>
