@@ -2,16 +2,20 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Code2, Braces, Hash, FileCode, Brackets, Binary } from 'lucide-react';
 
-const floatingIcons = [
-  { Icon: Code2, x: -120, y: -100, delay: 0.2, size: 24, color: 'text-indigo-400' },
-  { Icon: Braces, x: 130, y: -80, delay: 0.4, size: 20, color: 'text-purple-400' },
-  { Icon: Hash, x: -140, y: 40, delay: 0.3, size: 22, color: 'text-blue-400' },
-  { Icon: FileCode, x: 110, y: 70, delay: 0.5, size: 26, color: 'text-indigo-300' },
-  { Icon: Brackets, x: -60, y: -140, delay: 0.6, size: 18, color: 'text-purple-300' },
-  { Icon: Binary, x: 60, y: 130, delay: 0.35, size: 20, color: 'text-blue-300' },
-  { Icon: Code2, x: 160, y: -20, delay: 0.45, size: 18, color: 'text-indigo-200' },
-  { Icon: Braces, x: -160, y: -30, delay: 0.55, size: 22, color: 'text-purple-200' },
-];
+const getFloatingIcons = () => {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const scale = isMobile ? 0.55 : 1;
+  return [
+    { Icon: Code2, x: -120 * scale, y: -100 * scale, delay: 0.2, size: isMobile ? 18 : 24, color: 'text-indigo-400' },
+    { Icon: Braces, x: 130 * scale, y: -80 * scale, delay: 0.4, size: isMobile ? 16 : 20, color: 'text-purple-400' },
+    { Icon: Hash, x: -140 * scale, y: 40 * scale, delay: 0.3, size: isMobile ? 16 : 22, color: 'text-blue-400' },
+    { Icon: FileCode, x: 110 * scale, y: 70 * scale, delay: 0.5, size: isMobile ? 18 : 26, color: 'text-indigo-300' },
+    { Icon: Brackets, x: -60 * scale, y: -140 * scale, delay: 0.6, size: isMobile ? 14 : 18, color: 'text-purple-300' },
+    { Icon: Binary, x: 60 * scale, y: 130 * scale, delay: 0.35, size: isMobile ? 16 : 20, color: 'text-blue-300' },
+    { Icon: Code2, x: 160 * scale, y: -20 * scale, delay: 0.45, size: isMobile ? 14 : 18, color: 'text-indigo-200' },
+    { Icon: Braces, x: -160 * scale, y: -30 * scale, delay: 0.55, size: isMobile ? 16 : 22, color: 'text-purple-200' },
+  ];
+};
 
 export default function SplashScreen({ isVisible }) {
   return (
@@ -26,7 +30,7 @@ export default function SplashScreen({ isVisible }) {
         >
           {/* Floating icons */}
           <div className="absolute inset-0 flex items-center justify-center">
-            {floatingIcons.map(({ Icon, x, y, delay, size, color }, i) => (
+            {getFloatingIcons().map(({ Icon, x, y, delay, size, color }, i) => (
               <motion.div
                 key={i}
                 className={`absolute ${color}`}

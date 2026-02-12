@@ -42,7 +42,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-right"
+            className="text-center lg:text-right"
           >
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               أتقن لغة <span className="text-indigo-600">C#</span> بسهولة

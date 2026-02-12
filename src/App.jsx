@@ -32,14 +32,14 @@ function App() {
         
         <section id="tasks" className="container mx-auto px-4 py-16">
           <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <div>
+            <div className="text-center md:text-right">
               <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                 التاسكات
               </h2>
               <p className="text-gray-500 mt-2">اختر التحدي المناسب لمستواك.</p>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
               {['All', 'Easy', 'Medium', 'Hard'].map((level) => {
                 const count = level === 'All' ? tasks.length : tasks.filter(t => t.difficulty === level).length;
                 return (
