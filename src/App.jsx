@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import TaskCard from './components/TaskCard';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import SplashScreen from './components/SplashScreen';
 import tasksData from './data/tasks.json';
 
 function App() {
   const [tasks, setTasks] = useState(tasksData);
   const [filter, setFilter] = useState('All');
+  const [showSplash, setShowSplash] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowSplash(false), 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredTasks = filter === 'All' 
     ? tasks 
     : tasks.filter(t => t.difficulty === filter);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <>
+      <SplashScreen isVisible={showSplash} />
+      <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
       <Header />
       
       <main>
@@ -27,7 +36,7 @@ function App() {
               <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                 التاسكات
               </h2>
-              <p className="text-gray-500 mt-2">اختر التحدي المناسب لمستواك وابدأ البرمجة.</p>
+              <p className="text-gray-500 mt-2">اختر التحدي المناسب لمستواك.</p>
             </div>
 
             <div className="flex gap-2">
@@ -74,6 +83,7 @@ function App() {
       <Footer />
       <ScrollToTop />
     </div>
+    </>
   );
 }
 
