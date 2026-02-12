@@ -57,9 +57,10 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="h-[300px] md:h-[400px] lg:h-[500px] w-full relative overflow-hidden"
+            style={{ touchAction: 'none' }}
           >
              {/* Spline is rendered taller than the container, cropping the watermark at the bottom */}
-             <div className="absolute inset-0" style={{ bottom: '-60px', position: 'absolute', top: 0, left: 0, right: 0 }}>
+             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: '-60px', touchAction: 'none' }}>
                <Spline scene="https://prod.spline.design/iJ9Hvr2SHoxbKyn1/scene.splinecode" />
              </div>
           </motion.div>
