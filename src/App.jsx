@@ -30,13 +30,13 @@ function App() {
       <main>
         <Hero />
         
-        <section id="tasks" className="container mx-auto px-4 py-16">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+        <section id="tasks" className="container mx-auto px-4 py-8 md:py-16">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-10 gap-4">
             <div className="text-center md:text-right">
-              <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              <h2 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
                 التاسكات
               </h2>
-              <p className="text-gray-500 mt-2">اختر التحدي المناسب لمستواك.</p>
+              <p className="text-gray-500 mt-1 sm:mt-2 text-sm sm:text-base">اختر التحدي المناسب لمستواك.</p>
             </div>
 
             <div className="flex flex-wrap gap-2 justify-center md:justify-start">
@@ -46,10 +46,10 @@ function App() {
                   <button
                     key={level}
                     onClick={() => setFilter(level)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                    className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base active:scale-95 ${
                       filter === level 
                         ? 'bg-indigo-600 text-white shadow-md' 
-                        : 'bg-white text-gray-600 hover:bg-gray-100'
+                        : 'bg-white text-gray-600 hover:bg-gray-100 active:bg-gray-200'
                     }`}
                   >
                     {level === 'All' ? 'الكل' : level}
