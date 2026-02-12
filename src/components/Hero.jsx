@@ -48,7 +48,7 @@ export default function Hero() {
               أتقن لغة <span className="text-indigo-600">C#</span> بسهولة
             </h1>
             <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-              مجموعة مختارة من التاسكات والتحديات البرمجية المصممة لرفع مستواك من المبتدئ إلى المحترف.
+              مجموعة من التاسكات والتحديات البرمجية المصممة لرفع مستواك من المبتدئ إلى المحترف.
             </p>
           </motion.div>
 

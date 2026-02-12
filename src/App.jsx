@@ -3,8 +3,8 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import TaskCard from './components/TaskCard';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import tasksData from './data/tasks.json';
-import { Search, Filter } from 'lucide-react';
 
 function App() {
   const [tasks, setTasks] = useState(tasksData);
@@ -31,19 +31,29 @@ function App() {
             </div>
 
             <div className="flex gap-2">
-              {['All', 'Easy', 'Medium', 'Hard'].map((level) => (
-                <button
-                  key={level}
-                  onClick={() => setFilter(level)}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                    filter === level 
-                      ? 'bg-indigo-600 text-white shadow-md' 
-                      : 'bg-white text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  {level === 'All' ? 'الكل' : level}
-                </button>
-              ))}
+              {['All', 'Easy', 'Medium', 'Hard'].map((level) => {
+                const count = level === 'All' ? tasks.length : tasks.filter(t => t.difficulty === level).length;
+                return (
+                  <button
+                    key={level}
+                    onClick={() => setFilter(level)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${
+                      filter === level 
+                        ? 'bg-indigo-600 text-white shadow-md' 
+                        : 'bg-white text-gray-600 hover:bg-gray-100'
+                    }`}
+                  >
+                    {level === 'All' ? 'الكل' : level}
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full ${
+                      filter === level 
+                        ? 'bg-white/20 text-white' 
+                        : 'bg-gray-200 text-gray-500'
+                    }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -62,6 +72,7 @@ function App() {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
