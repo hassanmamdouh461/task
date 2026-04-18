@@ -26,7 +26,7 @@ export default function SplashScreen({ isVisible }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-b from-indigo-50 to-white overflow-hidden"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-b from-indigo-50 dark:from-indigo-950/40 to-white dark:to-gray-950 overflow-hidden"
         >
           {/* Floating icons */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -102,9 +102,9 @@ export default function SplashScreen({ isVisible }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="text-gray-500 text-base"
+            className="text-gray-500 dark:text-gray-400 text-base"
           >
-            تاسكات C#
+            بنك أسئلة C#
           </motion.p>
 
           {/* Loading dots */}

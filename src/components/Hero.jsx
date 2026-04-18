@@ -34,7 +34,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-indigo-50 to-white py-8 md:py-12 lg:py-20">
+    <section className="relative overflow-hidden bg-gradient-to-b from-indigo-50 dark:from-indigo-950/20 to-white dark:to-gray-950 py-8 md:py-12 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
           
@@ -45,10 +45,10 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
             className="text-center lg:text-right order-1"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
-              أتقن لغة <span className="text-indigo-600">C#</span> بسهولة
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6 leading-tight">
+              أتقن لغة <span className="text-indigo-600 dark:text-indigo-400">C#</span> بسهولة
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 md:mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0 lg:mr-0">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-6 md:mb-10 leading-relaxed max-w-lg mx-auto lg:mx-0 lg:mr-0">
               مجموعة من التاسكات والتحديات البرمجية المصممة لرفع مستواك من المبتدئ إلى المحترف.
             </p>
           </motion.div>

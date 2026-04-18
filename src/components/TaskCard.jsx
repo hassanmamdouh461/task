@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
-import { Download, Copy, Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Download, Copy, Check, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function TaskCard({ task, index }) {
   const [copied, setCopied] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const getDifficultyColor = (level) => {
     switch (level.toLowerCase()) {
-      case 'easy': return 'bg-green-100 text-green-700';
-      case 'medium': return 'bg-yellow-100 text-yellow-700';
-      case 'hard': return 'bg-red-100 text-red-700';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'easy': return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800';
+      case 'medium': return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800';
+      case 'hard': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800';
+      default: return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300 border border-gray-200 dark:border-gray-700';
     }
   };
 
-  const handleCopy = async () => {
+  const handleCopy = async (e) => {
+    e.stopPropagation(); // Prevent toggling if clicked on mobile
     await navigator.clipboard.writeText(task.codeSnippet);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownload = () => {
+  const handleDownload = (e) => {
+    e.stopPropagation();
     const element = document.createElement("a");
-    
-    // Wrap the snippet in a runnable C# program structure
-    const fileContent = `using System;
+    const isFullProgram = task.codeSnippet.includes("namespace") || task.codeSnippet.includes("class Program");
+
+    const fileContent = isFullProgram ? task.codeSnippet : `using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,40 +67,94 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6 hover:shadow-xl transition-all duration-300"
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      // Add onClick for mobile support so tapping expands it too
+      onClick={() => setIsHovered(!isHovered)}
+      className="bg-white dark:bg-gray-800/80 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-gray-700/80 hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-colors duration-300 overflow-hidden cursor-pointer"
     >
-      <div className="flex justify-between items-start mb-3 sm:mb-4">
-        <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${getDifficultyColor(task.difficulty)}`}>
-          {task.difficulty}
-        </span>
-        <button 
-          onClick={handleCopy}
-          className="text-gray-400 hover:text-indigo-600 active:text-indigo-700 transition-colors p-2 -m-1 rounded-lg active:bg-gray-100" 
-          title="نسخ الكود"
-        >
-          {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
-        </button>
-      </div>
-      
-      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{task.title}</h3>
-      <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 line-clamp-2">{task.description}</p>
-      
-      <div className="bg-gray-50 p-3 rounded-lg font-mono text-xs sm:text-sm text-gray-700 mb-3 sm:mb-4 dir-ltr text-left overflow-x-auto max-h-[150px] overflow-y-auto">
-        <pre className="whitespace-pre-wrap break-words sm:whitespace-pre">{task.codeSnippet}</pre>
+      {/* Header Strip - Always Visible */}
+      <div className="p-4 sm:p-5 flex items-center justify-between relative z-10">
+        <div className="flex items-center gap-3 sm:gap-4 flex-1">
+          <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold text-sm shrink-0">
+            {task.id}
+          </span>
+          <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white line-clamp-1">{task.title}</h3>
+        </div>
+        
+        <div className="flex items-center gap-3 shrink-0">
+          <span className={`hidden sm:flex text-xs font-bold px-3 py-1 rounded-full ${getDifficultyColor(task.difficulty)}`}>
+            {task.difficulty}
+          </span>
+          <motion.div
+            animate={{ rotate: isHovered ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className={`text-gray-400 dark:text-gray-500 ${isHovered ? 'text-indigo-500 dark:text-indigo-400' : ''}`}
+          >
+            <ChevronDown size={20} />
+          </motion.div>
+        </div>
       </div>
 
-      <button 
-        onClick={handleDownload}
-        className="w-full bg-white border border-gray-200 text-indigo-600 font-bold py-2.5 sm:py-2 rounded-lg hover:bg-indigo-50 active:bg-indigo-100 transition-colors flex items-center justify-center gap-2 group text-sm sm:text-base"
-      >
-        <Download size={18} className="group-hover:scale-110 transition-transform" />
-        <span>تحميل الحل (.cs)</span>
-      </button>
+      {/* Expandable Content Area */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="border-t border-gray-100 dark:border-gray-700/50 bg-gray-50/50 dark:bg-gray-900/20"
+          >
+            <div 
+              className="p-4 sm:p-5 lg:px-6 cursor-default"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when interacting with content
+            >
+              <div className="flex sm:hidden mb-4">
+                <span className={`text-xs font-bold px-3 py-1 rounded-full ${getDifficultyColor(task.difficulty)}`}>
+                  {task.difficulty}
+                </span>
+              </div>
+              
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-5 leading-relaxed bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm">
+                {task.description}
+              </p>
+              
+              <div className="relative group/code mb-5">
+                <div className="absolute top-2 left-2 z-20">
+                  <button 
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white rounded-md transition-all text-xs font-medium backdrop-blur-sm border border-white/10"
+                    title="نسخ الكود"
+                  >
+                    {copied ? <><Check size={14} className="text-green-400" /> تم النسخ</> : <><Copy size={14} /> انسخ</>}
+                  </button>
+                </div>
+                
+                <div className="bg-[#1e1e2e] rounded-xl p-4 sm:p-5 pt-12 overflow-x-auto shadow-inner dir-ltr text-left border border-gray-800">
+                  <pre className="font-mono text-sm text-gray-300 whitespace-pre">
+                    <code>{task.codeSnippet}</code>
+                  </pre>
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button 
+                  onClick={handleDownload}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 group shadow-sm hover:shadow text-sm sm:text-base w-full sm:w-auto"
+                >
+                  <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
+                  <span>تحميل الحل (.cs)</span>
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

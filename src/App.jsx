@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import Hero from './components/Hero';
 import TaskCard from './components/TaskCard';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -24,19 +23,17 @@ function App() {
   return (
     <>
       <SplashScreen isVisible={showSplash} />
-      <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans text-gray-900 dark:text-gray-100">
       <Header />
       
       <main>
-        <Hero />
-        
-        <section id="tasks" className="container mx-auto px-4 py-8 md:py-16">
+        <section id="tasks" className="max-w-4xl mx-auto px-4 py-8 md:py-12 mt-4">
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-10 gap-4">
             <div className="text-center md:text-right">
               <h2 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-                التاسكات
+                بنك الأسئلة
               </h2>
-              <p className="text-gray-500 mt-1 sm:mt-2 text-sm sm:text-base">اختر التحدي المناسب لمستواك.</p>
+              <p className="text-gray-500 mt-1 sm:mt-2 text-sm sm:text-base">"اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الصعب إن شئت سهلاً"</p>
             </div>
 
             <div className="flex flex-wrap gap-2 justify-center md:justify-start">
@@ -49,14 +46,14 @@ function App() {
                     className={`px-3 sm:px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base active:scale-95 ${
                       filter === level 
                         ? 'bg-indigo-600 text-white shadow-md' 
-                        : 'bg-white text-gray-600 hover:bg-gray-100 active:bg-gray-200'
+                        : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600'
                     }`}
                   >
                     {level === 'All' ? 'الكل' : level}
                     <span className={`text-xs px-1.5 py-0.5 rounded-full ${
                       filter === level 
                         ? 'bg-white/20 text-white' 
-                        : 'bg-gray-200 text-gray-500'
+                        : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     }`}>
                       {count}
                     </span>
@@ -66,7 +63,7 @@ function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-4">
             {filteredTasks.map((task, index) => (
               <TaskCard key={task.id} task={task} index={index} />
             ))}
