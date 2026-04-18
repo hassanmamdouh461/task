@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { Download, Copy, Check, ChevronDown } from 'lucide-react';
+import { Download, Copy, Check, ChevronDown, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function TaskCard({ task, index }) {
   const [copied, setCopied] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [showSolution, setShowSolution] = useState(false);
+
+  // Helper to close and reset
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    // Optional: reset solution state when closing so it's hidden next time
+    setShowSolution(false);
+  };
 
   const getDifficultyColor = (level) => {
     switch (level.toLowerCase()) {
@@ -72,9 +82,16 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={handleMouseLeave}
       // Add onClick for mobile support so tapping expands it too
-      onClick={() => setIsHovered(!isHovered)}
+      onClick={() => {
+        if (isHovered) {
+           setIsHovered(false);
+           setShowSolution(false);
+        } else {
+           setIsHovered(true);
+        }
+      }}
       className="bg-white dark:bg-gray-800/80 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-gray-700/80 hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-colors duration-300 overflow-hidden cursor-pointer"
     >
       {/* Header Strip - Always Visible */}
@@ -120,37 +137,67 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
                 </span>
               </div>
               
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-5 leading-relaxed bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-5 leading-relaxed bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm font-medium">
                 {task.description}
               </p>
               
-              <div className="relative group/code mb-5">
-                <div className="absolute top-2 left-2 z-20">
-                  <button 
-                    onClick={handleCopy}
-                    className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white rounded-md transition-all text-xs font-medium backdrop-blur-sm border border-white/10"
-                    title="نسخ الكود"
+              {!showSolution ? (
+                <div className="flex flex-col items-center justify-center py-6 sm:py-8 bg-gray-50 dark:bg-[#1e1e2e]/40 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 mb-2">
+                  <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm font-medium text-center px-4">
+                    حاول حل السؤال بنفسك أولاً في (Visual Studio) قبل رؤية الإجابة
+                  </p>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setShowSolution(true); }}
+                    className="bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition-colors flex items-center gap-2 shadow-sm text-sm"
                   >
-                    {copied ? <><Check size={14} className="text-green-400" /> تم النسخ</> : <><Copy size={14} /> انسخ</>}
+                    عرض الحل (Code)
                   </button>
                 </div>
-                
-                <div className="bg-[#1e1e2e] rounded-xl p-4 sm:p-5 pt-12 overflow-x-auto shadow-inner dir-ltr text-left border border-gray-800">
-                  <pre className="font-mono text-sm text-gray-300 whitespace-pre">
-                    <code>{task.codeSnippet}</code>
-                  </pre>
-                </div>
-              </div>
-
-              <div className="flex justify-end pt-2">
-                <button 
-                  onClick={handleDownload}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 group shadow-sm hover:shadow text-sm sm:text-base w-full sm:w-auto"
+              ) : (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  transition={{ duration: 0.3 }}
                 >
-                  <Download size={18} className="group-hover:-translate-y-0.5 transition-transform" />
-                  <span>تحميل الحل (.cs)</span>
-                </button>
-              </div>
+                  <div className="relative group/code mb-5">
+                    <div className="absolute top-2 left-2 z-20">
+                      <button 
+                        onClick={handleCopy}
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white rounded-md transition-all text-xs font-medium backdrop-blur-sm border border-white/10"
+                        title="نسخ الكود"
+                      >
+                        {copied ? <><Check size={14} className="text-green-400" /> تم النسخ</> : <><Copy size={14} /> انسخ</>}
+                      </button>
+                    </div>
+                    
+                    <div className="rounded-xl overflow-hidden shadow-inner dir-ltr text-left border border-gray-800">
+                      <SyntaxHighlighter
+                        language="csharp"
+                        style={vscDarkPlus}
+                        customStyle={{
+                          padding: '3rem 1.25rem 1.25rem 1.25rem', // pt-12 for copy button 
+                          margin: 0,
+                          background: '#1e1e1e', // Native VS Code Dark background
+                          fontSize: '0.875rem',
+                          lineHeight: '1.5'
+                        }}
+                      >
+                        {task.codeSnippet}
+                      </SyntaxHighlighter>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button 
+                      onClick={handleDownload}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 group shadow-sm hover:shadow text-sm sm:text-base w-full sm:w-auto"
+                    >
+                      <ExternalLink size={18} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                      <span>جرب الكود في Visual Studio</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         )}

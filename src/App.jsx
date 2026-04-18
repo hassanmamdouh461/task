@@ -7,7 +7,7 @@ import SplashScreen from './components/SplashScreen';
 import tasksData from './data/tasks.json';
 
 function App() {
-  const [tasks, setTasks] = useState(tasksData);
+  const tasks = tasksData;
   const [filter, setFilter] = useState('All');
   const [showSplash, setShowSplash] = useState(true);
 
@@ -23,10 +23,10 @@ function App() {
   return (
     <>
       <SplashScreen isVisible={showSplash} />
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans text-gray-900 dark:text-gray-100">
-      <Header />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 font-sans text-gray-900 dark:text-gray-100 flex flex-col relative">
+        <Header />
       
-      <main>
+      <main className="flex-1">
         <section id="tasks" className="max-w-4xl mx-auto px-4 py-8 md:py-12 mt-4">
           <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-10 gap-4">
             <div className="text-center md:text-right">
@@ -76,10 +76,9 @@ function App() {
           )}
         </section>
       </main>
-
-      <Footer />
-      <ScrollToTop />
-    </div>
+        <Footer />
+        <ScrollToTop />
+      </div>
     </>
   );
 }

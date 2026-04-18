@@ -26,7 +26,7 @@ export default function SplashScreen({ isVisible }) {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-b from-indigo-50 dark:from-indigo-950/40 to-white dark:to-gray-950 overflow-hidden"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white/80 dark:bg-gray-950/80 backdrop-blur-md overflow-hidden"
         >
           {/* Floating icons */}
           <div className="absolute inset-0 flex items-center justify-center">

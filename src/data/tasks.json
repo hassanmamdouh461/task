@@ -1,65 +1,142 @@
 [
   {
     "id": 1,
-    "title": "ترحيب بالمستخدم (Input/Output)",
+    "title": "رحب بالمستخدم باسمه (أساسيات)",
     "difficulty": "Easy",
     "description": "اكتب برنامجاً يطلب من المستخدم إدخال اسمه، ثم يطبع رسالة ترحيب مثل: 'Hello, [Name]!'. تعلم كيفية استخدام Console.ReadLine و Console.WriteLine.",
     "codeSnippet": "using System;\n\nnamespace WelcomeUser\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // 1. بنطبع رسالة نطلب من المستخدم يدخل اسمه (بدون النزول لسطر جديد عشان يكتب جنبه)\n            Console.Write(\"Enter your name: \");\n            \n            // 2. بنقرأ الاسم اللي المستخدم كتبه ونخزنه في متغير نوعه نص (string)\n            string name = Console.ReadLine();\n            \n            // 3. بنطبع كلمة Hello وبندمج معاها المتغير اللي شايل الاسم باستخدام علامة (+)\n            Console.WriteLine(\"Hello, \" + name + \"!\");\n        }\n    }\n}"
   },
   {
     "id": 2,
-    "title": "حساب مساحة الدائرة (Variables & Math)",
+    "title": "احسب مساحة الدائرة (عمليات حسابية)",
     "difficulty": "Easy",
     "description": "اكتب برنامجاً يطلب نصف القطر (radius) من المستخدم ويحسب مساحة الدائرة. استخدم الثابت Math.PI.",
     "codeSnippet": "using System;\n\nnamespace CircleArea\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter the radius of the circle: \");\n            \n            // 1. بنقرأ الرقم ونحوله لـ double (عشان نصف القطر ممكن يكون فيه كسور زي 2.5)\n            double radius = double.Parse(Console.ReadLine());\n            \n            // 2. قاعدة المساحة هي: ط * نق * نق (أو Pi * r * r)\n            // استخدمنا Math.PI عشان نجيب قيمة (ط) الدقيقة اللي هي تقريباً 3.14\n            double area = Math.PI * radius * radius;\n            \n            // 3. بنطبع النتيجة للمستخدم\n            Console.WriteLine(\"Area: \" + area);\n        }\n    }\n}"
   },
   {
     "id": 3,
-    "title": "فحص الرقم الزوجي (Conditionals)",
+    "title": "اختبر الرقم زوجي ولا فردي (قاعدة if)",
     "difficulty": "Easy",
     "description": "اكتب برنامجاً يتحقق مما إذا كان الرقم المدخل زوجياً أم فردياً باستخدام جملة الشرط if-else وباقي القسمة (%).",
     "codeSnippet": "using System;\n\nnamespace EvenOrOdd\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a number: \");\n            int num = int.Parse(Console.ReadLine());\n            \n            // 1. علامة (%) معناها \"باقي القسمة\". \n            // أي رقم زوجي في الدنيا لو قسمناه على 2، مش هيتبقى حاجة (باقي القسمة = صفر)\n            if (num % 2 == 0) \n            {\n                // لو الشرط اتحقق (الرقم زوجي)\n                Console.WriteLine(\"Even\");\n            }\n            else \n            {\n                // لو الشرط متحققش (يبقى أكيد الرقم فردي)\n                Console.WriteLine(\"Odd\");\n            }\n        }\n    }\n}"
   },
   {
     "id": 4,
-    "title": "عكس النص (Loops & Strings)",
+    "title": "اعكس الكلمة بالمتشقلب (حلقات Loop)",
     "difficulty": "Medium",
     "description": "اكتب دالة (Method) تستقبل نصاً وتطبعه معكوساً بدون استخدام دوال جاهزة مثل Reverse، استخدم Loop.",
     "codeSnippet": "using System;\n\nnamespace ReverseString\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a word: \");\n            string input = Console.ReadLine();\n            \n            // 1. بنعمل متغير \"فاضي\" خالص عشان نحوش فيه الحروف وهي مقلوبة\n            string reversed = \"\";\n            \n            // 2. بنعمل حلقة for تمشي بالراجع!\n            // البداية: من آخر حرف في الكلمة (اللي هو طول الكلمة ناقص 1، لأن العد بيبدأ من صفر)\n            // النهاية: لحد ما نوصل لأول حرف (رقم صفر)\n            // الزيادة: هنا بنعمل نقصان (i--) عشان نرجع لورا مش نطلع لقدام\n            for (int i = input.Length - 1; i >= 0; i--)\n            {\n                // 3. كل لفة بنجيب الحرف اللي عليه الدور ونلزقه في الكلمة الفاضية\n                reversed = reversed + input[i];\n            }\n            \n            // 4. بنطبع الكلمة بعد ما اتجمعت بالمقلوب\n            Console.WriteLine(\"Reversed word: \" + reversed);\n        }\n    }\n}"
   },
   {
     "id": 5,
-    "title": "أكبر رقم في المصفوفة (Arrays)",
+    "title": "طلع أكبر رقم من وسط المجموعة (مصفوفة)",
     "difficulty": "Medium",
     "description": "اكتب برنامجاً يجد أكبر رقم (Maximum) في مصفوفة من الأعداد الصحيحة دون استخدام LINQ.",
     "codeSnippet": "using System;\n\nnamespace MaximumNumber\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // 1. دي مصفوفة (Array) فيها شوية أرقام متخزنة جاهزة\n            int[] numbers = { 10, 5, 20, 8 };\n            \n            // 2. بنفترض مبدئياً إن \"أول رقم\" هو أكبر رقم لحد ما نثبت العكس\n            int max = numbers[0];\n            \n            // 3. بنعمل حلقة for تلف على كل الأرقام اللي جوه المصفوفة\n            for (int i = 0; i < numbers.Length; i++)\n            {\n                // 4. بنسأل سؤال: هل الرقم اللي واقفين عليه دلوقتي أكبر من الـ max اللي معانا؟\n                if (numbers[i] > max)\n                {\n                    // لو أكبر، يبقى نغير الـ max ونخليه هو الرقم الجديد ده\n                    max = numbers[i];\n                }\n            }\n            \n            // 5. بعد ما الحلقة تخلص وتلف على كل الأرقام، بنطبع أكبر رقم لقيناه\n            Console.WriteLine(\"The maximum number is: \" + max);\n        }\n    }\n}"
   },
   {
     "id": 6,
-    "title": "التحقق من Palindrome (Logic)",
+    "title": "الكلمة بتتقري من الناحيتين زي بعض؟ (المنطق)",
     "difficulty": "Medium",
     "description": "اكتب برنامجاً يتحقق مما إذا كانت الكلمة تقرأ من الأمام مثل الخلف (مثل 'level' أو 'noon').",
     "codeSnippet": "using System;\n\nnamespace PalindromeCheck\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a word: \");\n            string originalWord = Console.ReadLine();\n            \n            // 1. هنجيب الكلمة ونعكسها بنفس الطريقة بتاعة السؤال الرابع بالظبط\n            string reversedWord = \"\";\n            for (int i = originalWord.Length - 1; i >= 0; i--)\n            {\n                reversedWord = reversedWord + originalWord[i];\n            }\n            \n            // 2. دلوقتي معانا الكلمة الأصلية، والكلمة المقلوبة. هنقارنهم ببعض!\n            // لو طلعوا بيساووا بعض بالظبط، يبقى الكلمة دي Palindrome\n            if (originalWord == reversedWord)\n            {\n                Console.WriteLine(\"Yes! It is a Palindrome.\");\n            }\n            else\n            {\n                // لو مش بيساووا بعض\n                Console.WriteLine(\"No! It is not a Palindrome.\");\n            }\n        }\n    }\n}"
   },
   {
     "id": 7,
-    "title": "رسم مثلث قائم الزاوية بالنجوم (Nested Loops)",
+    "title": "ارسم مثلث نجوم (لوب جوة لوب)",
     "difficulty": "Medium",
     "description": "اكتب برنامجاً يطبع مثلثاً من النجوم مكوناً من 5 صفوف. الصف الأول به نجمة واحدة، والثاني نجمتان، وهكذا. (هذا السؤال يختبر فهم الحلقات المتداخلة بناءً على ما درسوه في الواجب).",
     "codeSnippet": "using System;\n\nnamespace RightTriangle\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.WriteLine(\"--- Star Triangle ---\");\n            \n            // 1. الحلقة الخارجية: بتتحكم في عدد الصفوف (عايزين 5 صفوف)\n            for (int row = 1; row <= 5; row++)\n            {\n                // 2. الحلقة الداخلية (التريكة هنا): \n                // مش هنثبتها تقف عند 5، إحنا هنخليها تقف عند رقم الصف الحالي (row)\n                // يعني لو إحنا في الصف الأول، هتلف لفة وتطبع نجمة. \n                // لو في الصف التاني، هتلف لفتين وتطبع نجمتين، وهكذا.\n                for (int col = 1; col <= row; col++)\n                {\n                    Console.Write(\"* \");\n                }\n                \n                // 3. ننزل سطر جديد بعد ما نخلص نجوم الصف الحالي\n                Console.WriteLine();\n            }\n        }\n    }\n}"
   },
   {
     "id": 8,
-    "title": "حساب المجموع التراكمي (Accumulator Pattern)",
+    "title": "مجموع الأرقام",
     "difficulty": "Medium",
     "description": "اكتب برنامجاً يطلب من المستخدم إدخال رقم (مثلاً 5)، ويقوم البرنامج بجمع جميع الأرقام من 1 إلى هذا الرقم (1 + 2 + 3 + 4 + 5) وطباعة الناتج النهائي. (نفس فكرة المضروب ولكن بالجمع).",
     "codeSnippet": "using System;\n\nnamespace SumOfNumbers\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a number: \");\n            int number = int.Parse(Console.ReadLine());\n            \n            // 1. بنعمل \"حصالة\" عشان نجمع فيها الأرقام\n            // بدأناها بصفر لأن الصفر هو المحايد الجمعي (مش هيأثر في الجمع)\n            int sum = 0;\n            \n            // 2. حلقة بتبدأ من 1 وتقف عند الرقم اللي المستخدم دخله\n            for (int i = 1; i <= number; i++)\n            {\n                // 3. في كل لفة، بناخد قيمة العداد (i) ونحطها جوه الحصالة\n                sum = sum + i;\n            }\n            \n            // 4. بعد ما الحلقة تخلص خالص، بنطبع الحصالة فيها كام\n            Console.WriteLine(\"The sum from 1 to \" + number + \" is: \" + sum);\n        }\n    }\n}"
   },
   {
     "id": 9,
-    "title": "حساب الأُسس بدون دوال جاهزة (Math Logic & Loops)",
+    "title": "اعمل آلة حاسبة بسيطة (قاعدة Switch)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يطلب من المستخدم إدخال رقمين، ثم يعرض له قائمة لاختيار العملية الحسابية (+, -, *, /) باستخدام قاعدة switch، ثم يطبع الناتج. (هذا السؤال تطبيق مباشر على محاضرة 5_6).",
+    "codeSnippet": "using System;\n\nnamespace SimpleCalculator\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter first number: \");\n            int num1 = int.Parse(Console.ReadLine());\n\n            Console.Write(\"Enter second number: \");\n            int num2 = int.Parse(Console.ReadLine());\n\n            Console.WriteLine(\"Choose an operation (+, -, *, /): \");\n            // بنقرأ العلامة اللي المستخدم دخلها كنص (string)\n            string operation = Console.ReadLine();\n\n            // بنستخدم switch عشان نختبر العلامة اللي دخلت وننفذ كود معين على أساسها\n            switch (operation)\n            {\n                case \"+\":\n                    Console.WriteLine(\"Result = \" + (num1 + num2));\n                    break; // لازم نكتب break عشان البرنامج يخرج من الـ switch وميكملش باقي الحالات\n                case \"-\":\n                    Console.WriteLine(\"Result = \" + (num1 - num2));\n                    break;\n                case \"*\":\n                    Console.WriteLine(\"Result = \" + (num1 * num2));\n                    break;\n                case \"/\":\n                    // ضفنا شرط if عشان نمنع القسمة على صفر (تفكير برمجي سليم)\n                    if (num2 == 0)\n                        Console.WriteLine(\"Error: Cannot divide by zero!\");\n                    else\n                        Console.WriteLine(\"Result = \" + (num1 / num2));\n                    break;\n                default:\n                    // لو المستخدم دخل علامة غريبة مش في الاختيارات\n                    Console.WriteLine(\"Invalid operation!\");\n                    break;\n            }\n        }\n    }\n}"
+  },
+  {
+    "id": 10,
+    "title": "هل الرقم ده أولي ولا لأ؟ (اختبارات)",
+    "difficulty": "Medium",
+    "description": "العدد الأولي هو الذي لا يقبل القسمة إلا على نفسه وعلى الواحد (مثل 5، 7، 11). اكتب برنامجاً يطلب من المستخدم رقماً ويتحقق مما إذا كان أولياً أم لا.",
+    "codeSnippet": "using System;\n\nnamespace PrimeChecker\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a number: \");\n            int number = int.Parse(Console.ReadLine());\n\n            // 1. بنعمل متغير نوعه (صح/غلط) كأنه \"علم\" أو مؤشر. \n            // هنفترض في الأول إن الرقم \"أولي\" لحد ما نثبت العكس.\n            bool isPrime = true;\n\n            // الأرقام اللي أقل من 2 مش أرقام أولية أساساً\n            if (number < 2)\n            {\n                isPrime = false;\n            }\n            else\n            {\n                // 2. بنعمل حلقة تبدأ من 2 لحد الرقم اللي قبل الرقم بتاعنا\n                // ليه؟ لأننا عايزين نتأكد إنه مبيقبلش القسمة على أي رقم في النص\n                for (int i = 2; i < number; i++)\n                {\n                    // لو الرقم قِبل القسمة على أي عداد في النص (يعني الباقي صفر)\n                    if (number % i == 0)\n                    {\n                        isPrime = false; // يبقى الرقم ده مش أولي!\n                        break; // بنوقف الحلقة فوراً لأننا مش محتاجين نكمل تدوير\n                    }\n                }\n            }\n\n            // 3. في النهاية بنطبع النتيجة بناءً على حالة الـ \"علم\"\n            if (isPrime == true)\n                Console.WriteLine(number + \" is a Prime number.\");\n            else\n                Console.WriteLine(number + \" is NOT a Prime number.\");\n        }\n    }\n}"
+  },
+  {
+    "id": 11,
+    "title": "حلقة مش هتقف غير برقم سالب (While loop)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يظل يطلب من المستخدم إدخال أرقام موجبة ويقوم بجمعها. يتوقف البرنامج عن طلب الأرقام فور إدخال رقم سالب (Sentinel Value)، ثم يطبع المجموع النهائي للأرقام الموجبة.",
+    "codeSnippet": "using System;\n\nnamespace SentinelLoop\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            int sum = 0;\n            int number = 0;\n\n            // حلقة while بتفضل شغالة طول ما الشرط ده بيتحقق (الرقم مش سالب)\n            while (number >= 0)\n            {\n                Console.Write(\"Enter a positive number (or a negative number to stop): \");\n                number = int.Parse(Console.ReadLine());\n\n                // بنتأكد إن الرقم لسه موجب قبل ما نجمعه على الحصالة\n                if (number >= 0)\n                {\n                    sum = sum + number;\n                }\n            }\n\n            // السطر ده مش هيتنفذ إلا لما المستخدم يدخل رقم سالب والحلقة تكسر\n            Console.WriteLine(\"The total sum of positive numbers is: \" + sum);\n        }\n    }\n}"
+  },
+  {
+    "id": 12,
+    "title": "ارسم لوحة شطرنج بالنجوم (لوجيك)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يطبع شكل رقعة الشطرنج بأبعاد 5×5 باستخدام النجوم والمسافات. (نجمة ثم مسافة ثم نجمة...). يعتمد هذا السؤال على فهم العلاقة بين أرقام الصفوف والأعمدة.",
+    "codeSnippet": "using System;\n\nnamespace Checkerboard\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            int n = 5;\n\n            // حلقة الصفوف\n            for (int row = 1; row <= n; row++)\n            {\n                // حلقة الأعمدة\n                for (int col = 1; col <= n; col++)\n                {\n                    // اللوجيك: لو جمعنا رقم الصف على رقم العمود\n                    // وطلع الناتج زوجي، بنطبع نجمة. لو فردي، بنطبع مسافة.\n                    // ده بيخلق شكل التبادل بتاع رقعة الشطرنج بالظبط!\n                    if ((row + col) % 2 == 0)\n                    {\n                        Console.Write(\"*\");\n                    }\n                    else\n                    {\n                        Console.Write(\" \");\n                    }\n                }\n                Console.WriteLine();\n            }\n        }\n    }\n}"
+  },
+  {
+    "id": 13,
+    "title": "اجمع خانات الرقم الواحد مع بعض (تفتيت الرقم)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يطلب من المستخدم رقماً صحيحاً (مثلاً 451)، ويقوم البرنامج بجمع خانات هذا الرقم معاً (4 + 5 + 1 = 10) ويطبع النتيجة.",
+    "codeSnippet": "using System;\n\nnamespace SumOfDigits\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a number: \");\n            int number = int.Parse(Console.ReadLine());\n            \n            int sum = 0;\n\n            // هنفضل شغالين طول ما الرقم لسه فيه خانات\n            while (number > 0)\n            {\n                // بنمسك آخر خانة (باقي القسمة على 10)\n                int digit = number % 10;\n\n                // بنجمعها جوه حصالة المجموع\n                sum = sum + digit;\n\n                // بنطير الخانة اللي جمعناها عشان اللفة الجاية نجيب اللي بعدها\n                number = number / 10;\n            }\n\n            Console.WriteLine(\"Sum of the digits = \" + sum);\n        }\n    }\n}"
+  },
+  {
+    "id": 14,
+    "title": "سؤال خادع عشان نختبر تركيزك (تتوقع إيه؟)",
+    "difficulty": "Medium",
+    "description": "سؤال خيارات من متعدد (MCQ) يختبر مدى تركيزك في تفاصيل الـ Loop. الكود فيه حلقة for بتزيد بمقدار 2، ما هو الناتج النهائي للمتغير x؟",
+    "codeSnippet": "/*\nالسؤال: ما هو ناتج الكود التالي؟\nA) 10\nB) 6   <--- الإجابة الصحيحة\nC) 4\nD) 15\n\nالتعليق والشرح:\nحلقة الـ for هنا مش بتزيد بمقدار 1، دي بتزيد بمقدار 2 (i += 2).\nاللفة الأولى: i = 0 ⬅️ x بقت بـ 0.\nاللفة التانية: i = 2 ⬅️ x بقت بـ 2.\nاللفة التالتة: i = 4 ⬅️ x بقت (2 + 4) = 6.\nاللفة اللي بعدها i هتبقى بـ 6، فالشرط (i < 5) مش هيتحقق والحلقة هتقف، وتطبع 6.\n*/\n\nusing System;\n\nnamespace GuessOutput\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            int x = 0;\n            for (int i = 0; i < 5; i += 2)\n            {\n                x = x + i;\n            }\n            Console.WriteLine(x);\n        }\n    }\n}"
+  },
+  {
+    "id": 15,
+    "title": "احسب مضروب الرقم (Factorial)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامج يقرا رقم من المستخدم ويحسب المضروب بتاعه رياضيًا (مثال: مضروب 5 هو 5 × 4 × 3 × 2 × 1 = 120). بنستخدم هنا نفس فكرة المجموع التراكمي بس في الضرب.",
+    "codeSnippet": "using System;\n\nnamespace FactorialCalculator\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a number: \");\n            int number = int.Parse(Console.ReadLine());\n            \n            // بنبدأ حصالة الضرب بـ 1 لأن 1 هو المحايد الضربي (عكس الصفر في الجمع)\n            // استخدمنا long بدل int عشان المضروب بيكبر بسرعة جداً لو الرقم كبير\n            long factorial = 1;\n\n            // الحلقة بتلف من 1 لحد الرقم اللي المستخدم دخله وتضرب الأرقام في بعض\n            for (int i = 1; i <= number; i++)\n            {\n                factorial = factorial * i;\n            }\n\n            Console.WriteLine(\"Factorial of \" + number + \" is: \" + factorial);\n        }\n    }\n}"
+  },
+  {
+    "id": 16,
+    "title": "جدول الضرب الكامل (Nested Loops)",
+    "difficulty": "Medium",
+    "description": "اكتب برنامجاً يطبع جدول الضرب من 1 إلى 10 بشكل منظم ومنسق (1×1=1 إلي 10×10=100) باستخدام حلقتين متداخلتين. (سؤال كلاسيكي قوي جداً لفهم الحلقات المتداخلة).",
+    "codeSnippet": "using System;\n\nnamespace MultiplicationTable\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.WriteLine(\"=== Multiplication Table (1 to 10) ===\\n\");\n\n            // 1. الحلقة الخارجية للتحكم في الجدول نفسه (من جدول 1 لحد جدول 10)\n            for (int i = 1; i <= 10; i++)\n            {\n                // بنطبع فاصل عشان شكل الخرج يكون نضيف ومرتب\n                Console.WriteLine(\"--- Table of \" + i + \" ---\");\n\n                // 2. الحلقة الداخلية للضرب (بتضرب الرقم اللي بره من 1 لحد 10)\n                for (int j = 1; j <= 10; j++)\n                {\n                    // 3. بنعمل عملية الضرب \n                    int result = i * j;\n                    \n                    // 4. بنطبع العملية بشكل منسق (3 x 2 = 6)\n                    Console.WriteLine(i + \" x \" + j + \" = \" + result);\n                }\n                \n                // بنسيب سطر فاضي بعد كل جدول عشان الشكل\n                Console.WriteLine();\n            }\n        }\n    }\n}"
+  },
+  {
+    "id": 17,
+    "title": "اضرب الرقم في نفسه كذا مرة (حساب الأسس)",
     "difficulty": "Hard",
     "description": "اكتب برنامجاً يطلب من المستخدم إدخال رقم أساس (Base) ورقم أُس (Exponent)، ثم يحسب الناتج باستخدام الحلقات (Loops) فقط بدون استخدام الدالة الجاهزة Math.Pow. (مثال: 2 أُس 3 = 8).",
     "codeSnippet": "using System;\n\nnamespace CalculatePower\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // 1. بنطلب من المستخدم يدخل الرقم الأساسي (مثلاً 2)\n            Console.Write(\"Enter the base number: \");\n            int baseNum = int.Parse(Console.ReadLine());\n            \n            // 2. بنطلب منه يدخل الأُس (مثلاً 3، يعني عايزين نضرب الـ 2 في نفسها 3 مرات)\n            Console.Write(\"Enter the power (exponent): \");\n            int power = int.Parse(Console.ReadLine());\n            \n            // 3. بنعمل \"خزنة\" للضرب، وبنبدأها بـ 1 (المحايد الضربي)\n            int result = 1;\n            \n            // 4. بنعمل حلقة بتلف عدد مرات يساوي الـ (power)\n            for (int i = 1; i <= power; i++)\n            {\n                // 5. في كل لفة، بنضرب النتيجة القديمة في الرقم الأساسي\n                result = result * baseNum;\n            }\n            \n            // 6. بنطبع النتيجة النهائية\n            Console.WriteLine(baseNum + \" to the power of \" + power + \" = \" + result);\n        }\n    }\n}"
+  },
+  {
+    "id": 18,
+    "title": "ارسم هرم نجوم مقلوب (مستوى أعلى)",
+    "difficulty": "Hard",
+    "description": "اكتب برنامجاً يطبع هرماً من النجوم المقلوبة قاعدته لأعلى مكوناً من 5 صفوف (كما هو مطلوب في تكليفات المحاضرات). الصف الأول يحتوي على 5 نجوم، والثاني 4، وهكذا حتى نجمة واحدة.",
+    "codeSnippet": "using System;\n\nnamespace InvertedTriangle\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.WriteLine(\"--- Inverted Star Pyramid ---\");\n\n            // 1. الحلقة الخارجية للتحكم في الصفوف\n            // بس المرة دي هنبدأ من 5 وننزل لحد 1 (i--)\n            for (int row = 5; row >= 1; row--)\n            {\n                // 2. الحلقة الداخلية للتحكم في الأعمدة (النجوم)\n                // هتبدأ من 1 وتقف عند الـ row اللي إحنا واقفين عنده\n                // في اللفة الأولى الـ row بـ 5، فهتطبع 5 نجوم.\n                // في اللفة التانية الـ row هيبقى 4، فهتطبع 4 نجوم.. وهكذا.\n                for (int col = 1; col <= row; col++)\n                {\n                    Console.Write(\"* \");\n                }\n\n                // 3. النزول لسطر جديد بعد نهاية كل صف\n                Console.WriteLine();\n            }\n        }\n    }\n}"
+  },
+  {
+    "id": 19,
+    "title": "شقلب الأرقام بالرياضة (من غير كلمات)",
+    "difficulty": "Hard",
+    "description": "اكتب برنامجاً يطلب من المستخدم إدخال رقم صحيح (مثلاً 1234)، ويقوم البرنامج بطباعة الرقم معكوساً (4321) باستخدام العمليات الرياضية وحلقة while فقط (بدون تحويل الرقم إلى نص string).",
+    "codeSnippet": "using System;\n\nnamespace ReverseNumberMath\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter a number: \");\n            int number = int.Parse(Console.ReadLine());\n            \n            // المتغير ده هنحوش فيه الرقم المعكوس\n            int reversed = 0;\n\n            // الحلقة هتفضل شغالة طول ما الرقم لسه فيه خانات (أكبر من الصفر)\n            while (number > 0)\n            {\n                // 1. بنجيب آخر خانة في الرقم عن طريق باقي القسمة على 10\n                // (يعني لو الرقم 1234، باقي قسمته على 10 هو 4)\n                int lastDigit = number % 10;\n\n                // 2. بنزق الرقم المعكوس القديم خانة للشمال (نضربه في 10) \n                // ونجمع عليه الخانة الجديدة اللي لسه جايبينها\n                reversed = (reversed * 10) + lastDigit;\n\n                // 3. بنطير آخر خانة من الرقم الأصلي عشان اللفة الجاية\n                // (القسمة على 10 في الأرقام الصحيحة int بتطير الكسور، يعني 1234 هتبقى 123)\n                number = number / 10;\n            }\n\n            Console.WriteLine(\"Reversed Number: \" + reversed);\n        }\n    }\n}"
+  },
+  {
+    "id": 20,
+    "title": "هات أكبر رقم بيقبلوا القسمة عليه (GCD)",
+    "difficulty": "Hard",
+    "description": "اكتب برنامجاً يطلب من المستخدم إدخال رقمين، ويقوم بحساب \"القاسم المشترك الأكبر\" (Greatest Common Divisor) بينهما. (أكبر رقم يقبل كلاهما القسمة عليه بدون باقٍ).",
+    "codeSnippet": "using System;\n\nnamespace GCD\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.Write(\"Enter first number: \");\n            int a = int.Parse(Console.ReadLine());\n\n            Console.Write(\"Enter second number: \");\n            int b = int.Parse(Console.ReadLine());\n\n            // الفكرة ببساطة (طريقة التبديل وباقي القسمة):\n            // بنفضل نجيب باقي قسمة الرقمين على بعض، ونبدلهم، لحد ما واحد فيهم يوصل لصفر.\n            while (b != 0)\n            {\n                // بنحفظ قيمة b القديمة في متغير مؤقت عشان متضيعش\n                int temp = b;\n\n                // الـ b الجديدة بتاخد باقي قسمة الرقمين\n                b = a % b;\n\n                // الـ a الجديدة بتاخد قيمة الـ b القديمة\n                a = temp;\n            }\n\n            // لما الحلقة تقف (يعني b بقت بصفر)، القاسم المشترك بيكون متخزن في a\n            Console.WriteLine(\"The Greatest Common Divisor (GCD) is: \" + a);\n        }\n    }\n}"
   }
 ]
