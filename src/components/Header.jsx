@@ -12,7 +12,7 @@ export default function Header() {
         </div>
         
         <nav className="flex items-center gap-4 md:gap-8 font-medium text-gray-600 dark:text-gray-300 text-sm md:text-base">
-          <a href="#tasks" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">بنك الأسئلة</a>
+          <a href="#tasks" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Question Bank</a>
           <ThemeToggle />
         </nav>
       </div>

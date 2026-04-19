@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, Copy, Check, ChevronDown, ExternalLink } from 'lucide-react';
+import { Download, Copy, Check, ChevronDown, ExternalLink, Lightbulb } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -9,10 +9,11 @@ export default function TaskCard({ task, index }) {
   const [isHovered, setIsHovered] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
 
-  // Helper to close and reset
+  // تحدد نوع السؤال هل هو اختياري أم مقالي
+  const isMCQ = task.title.includes("MCQ") || task.title.includes("اختياري") || (task.description.includes("A)") && task.description.includes("B)"));
+
   const handleMouseLeave = () => {
     setIsHovered(false);
-    // Optional: reset solution state when closing so it's hidden next time
     setShowSolution(false);
   };
 
@@ -26,7 +27,7 @@ export default function TaskCard({ task, index }) {
   };
 
   const handleCopy = async (e) => {
-    e.stopPropagation(); // Prevent toggling if clicked on mobile
+    e.stopPropagation();
     await navigator.clipboard.writeText(task.codeSnippet);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -49,7 +50,6 @@ namespace CSharpTasks
         {
             // Task: ${task.title}
             // Level: ${task.difficulty}
-            // Description: ${task.description}
 
             // ==========================================
             //              Start Your Code
@@ -75,6 +75,54 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
     document.body.removeChild(element);
   };
 
+  const renderDescription = (text) => {
+    // تنسيق خاص لأسئلة الاختيارات
+    if (isMCQ && text.includes("A)") && text.includes("B)")) {
+       const lines = text.split('\n').filter(line => line.trim() !== '');
+       const questionLines = [];
+       const options = [];
+       
+       lines.forEach(line => {
+         const trimmed = line.trim();
+         if (/^[A-D]\)/.test(trimmed)) {
+           options.push(trimmed);
+         } else {
+           questionLines.push(trimmed);
+         }
+       });
+
+       return (
+         <div className="mb-5 bg-white dark:bg-gray-800/60 p-4 sm:p-6 rounded-xl border-2 border-transparent shadow-[0_0_15px_rgba(0,0,0,0.03)] dark:shadow-none ring-1 ring-gray-100 dark:ring-gray-700/50">
+           <div className="text-base sm:text-lg text-gray-800 dark:text-white mb-6 leading-relaxed font-bold whitespace-pre-wrap">
+              {questionLines.join('\n')}
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+              {options.map((opt, idx) => {
+                const prefix = opt.substring(0, 2);
+                const textContent = opt.substring(2).trim();
+                return (
+                  <div key={idx} className="group/opt flex items-center p-3 sm:px-4 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50/50 dark:bg-gray-700/30 hover:bg-white dark:hover:bg-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:shadow-md transition-all duration-300">
+                    <span className="flex items-center justify-center font-bold text-indigo-600 dark:text-indigo-400 w-8 h-8 rounded-lg bg-indigo-100/50 dark:bg-indigo-900/30 group-hover/opt:bg-indigo-100 dark:group-hover/opt:bg-indigo-900 shrink-0 text-left transition-colors" dir="ltr">
+                      {prefix.replace(')', '')} {/* Remove parenthesis for cleaner look */}
+                    </span>
+                    <span className="font-semibold text-gray-700 dark:text-gray-200 mr-3 text-sm sm:text-base leading-relaxed" dir="auto">{textContent}</span>
+                  </div>
+                );
+              })}
+           </div>
+         </div>
+       );
+    }
+
+    // Default view for multi-line written questions
+    return (
+      <div className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-5 leading-relaxed bg-white dark:bg-gray-800 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm font-medium whitespace-pre-wrap">
+        {text}
+      </div>
+    );
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
@@ -83,7 +131,6 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
       transition={{ duration: 0.3, delay: index * 0.05 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      // Add onClick for mobile support so tapping expands it too
       onClick={() => {
         if (isHovered) {
            setIsHovered(false);
@@ -94,7 +141,6 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
       }}
       className="bg-white dark:bg-gray-800/80 rounded-xl shadow-[0_2px_8px_-3px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-gray-700/80 hover:border-indigo-300 dark:hover:border-indigo-500/50 transition-colors duration-300 overflow-hidden cursor-pointer"
     >
-      {/* Header Strip - Always Visible */}
       <div className="p-4 sm:p-5 flex items-center justify-between relative z-10">
         <div className="flex items-center gap-3 sm:gap-4 flex-1">
           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold text-sm shrink-0">
@@ -117,7 +163,6 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
         </div>
       </div>
 
-      {/* Expandable Content Area */}
       <AnimatePresence>
         {isHovered && (
           <motion.div
@@ -129,7 +174,7 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
           >
             <div 
               className="p-4 sm:p-5 lg:px-6 cursor-default"
-              onClick={(e) => e.stopPropagation()} // Prevent closing when interacting with content
+              onClick={(e) => e.stopPropagation()} 
             >
               <div className="flex sm:hidden mb-4">
                 <span className={`text-xs font-bold px-3 py-1 rounded-full ${getDifficultyColor(task.difficulty)}`}>
@@ -137,20 +182,21 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
                 </span>
               </div>
               
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-5 leading-relaxed bg-white dark:bg-gray-800 p-4 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm font-medium">
-                {task.description}
-              </p>
+              {renderDescription(task.description)}
               
               {!showSolution ? (
-                <div className="flex flex-col items-center justify-center py-6 sm:py-8 bg-gray-50 dark:bg-[#1e1e2e]/40 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 mb-2">
+                <div className="flex flex-col items-center justify-center py-6 sm:py-8 bg-white dark:bg-[#1e1e2e]/40 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 mb-2 shadow-sm">
                   <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm font-medium text-center px-4">
-                    حاول حل السؤال بنفسك أولاً في (Visual Studio) قبل رؤية الإجابة
+                    {isMCQ 
+                      ? "فكر في الاختيار الصحيح قبل الإطلاع على الحل الدقيق والتفسير" 
+                      : "حاول حل السؤال في Visual Studio قبل رؤية الإجابة"}
                   </p>
                   <button
                     onClick={(e) => { e.stopPropagation(); setShowSolution(true); }}
-                    className="bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium py-2 px-6 rounded-lg transition-colors flex items-center gap-2 shadow-sm text-sm"
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-all flex items-center gap-2 shadow-md hover:shadow-lg text-sm"
                   >
-                    عرض الحل (Code)
+                    <Lightbulb size={18} />
+                    {isMCQ ? "إظهار الحل الصحيح" : "عرض الحل (Code)"}
                   </button>
                 </div>
               ) : (
@@ -159,7 +205,7 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
                   animate={{ opacity: 1, y: 0 }} 
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="relative group/code mb-5">
+                  <div className="relative group/code mb-2">
                     <div className="absolute top-2 left-2 z-20">
                       <button 
                         onClick={handleCopy}
@@ -175,9 +221,9 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
                         language="csharp"
                         style={vscDarkPlus}
                         customStyle={{
-                          padding: '3rem 1.25rem 1.25rem 1.25rem', // pt-12 for copy button 
+                          padding: '3rem 1.25rem 1.25rem 1.25rem',
                           margin: 0,
-                          background: '#1e1e1e', // Native VS Code Dark background
+                          background: '#1e1e1e',
                           fontSize: '0.875rem',
                           lineHeight: '1.5'
                         }}
@@ -187,15 +233,17 @@ ${task.codeSnippet.split('\n').map(line => '            ' + line).join('\n')}
                     </div>
                   </div>
 
-                  <div className="flex justify-end pt-2">
-                    <button 
-                      onClick={handleDownload}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 group shadow-sm hover:shadow text-sm sm:text-base w-full sm:w-auto"
-                    >
-                      <ExternalLink size={18} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                      <span>جرب الكود في Visual Studio</span>
-                    </button>
-                  </div>
+                  {!isMCQ && (
+                    <div className="flex justify-end pt-3">
+                      <button 
+                        onClick={handleDownload}
+                        className="bg-gray-800 hover:bg-gray-900 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 group shadow-sm hover:shadow text-sm sm:text-base w-full sm:w-auto"
+                      >
+                        <ExternalLink size={18} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                        <span>تحميل وجرب الكود</span>
+                      </button>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </div>
